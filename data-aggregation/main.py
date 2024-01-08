@@ -11,3 +11,11 @@ size = data_numpy[:,6]
 tips = np.array(data_numpy[:,1], dtype=float)
 bills = np.array(data_numpy[:,0], dtype=float)
 tip_percentages = tips/bills
+
+print(f"The average bill amount is ${round(np.mean(bills), 2)}")
+
+print(f"The median bill amount is ${round(np.median(bills), 2)}")
+
+print(f"The smallest bill is ${round(np.min(bills), 2) }")
+
+print(f"The largest bill is ${round(np.max(bills), 2)}")
