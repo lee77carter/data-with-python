@@ -1,5 +1,6 @@
 import csv
 import numpy as np
+import matplotlib.pyplot as plt
 
 with open("titanic.csv", "r") as file:
   data = csv.reader(file, delimiter=",")
@@ -23,10 +24,23 @@ for index in range(0, len(fare)):
     fare_not_survived.append(fare[index])
 
 #ADD CODE: print lists
-print(f"The average fare of those who survived was: ${round(np.mean(fare_survived), 2)}")
+# print(f"The average fare of those who survived was: ${round(np.mean(fare_survived), 2)}")
 
-print(f"The average fare of those who did not survive was: ${round(np.mean(fare_not_survived), 2)}")
+# print(f"The average fare of those who did not survive was: ${round(np.mean(fare_not_survived), 2)}")
 
-print(f"The median fare of those who survived was: ${round(np.median(fare_survived), 2)}")
+# print(f"The median fare of those who survived was: ${round(np.median(fare_survived), 2)}")
 
-print(f"The median fare of those who did not survive was: ${round(np.median(fare_not_survived), 2)}")
+# print(f"The median fare of those who did not survive was: ${round(np.median(fare_not_survived), 2)}")
+
+bins = range(0,240,15)
+
+plt.hist(fare_not_survived,bins,histtype="bar", color="red", alpha=0.5)
+plt.hist(fare_survived,bins,histtype="bar", color="lime", alpha=0.5)
+plt.xticks(range(0,240,20))
+plt.yticks(range(0,360,25))
+plt.xlabel("Fare")
+plt.ylabel("Passengers")
+plt.title("Titanic Fares and Survival Rates")
+plt.gca().legend(("Did Not Survive","Survived"))
+
+plt.savefig("titanic_fares_and_survival_rates.png")
