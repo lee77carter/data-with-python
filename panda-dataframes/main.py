@@ -23,11 +23,10 @@ def format_currency(dataset):
     ## OECD: # https://stats.oecd.org/Index.aspx?DataSetCode=AV_AN_WAGE 
 
 
-# ADD CODE: Pandas dataframes
-wage = pd.read_csv("wage.csv", delimiter = ",")
+# Pandas dataframes
+wage = pd.read_csv("wage.csv", delimiter=",")
 print(wage)
-
-happiness = pd.read.csv("happiness.csv", delimiter = ",")
+happiness = pd.read_csv("happiness.csv", delimiter=",")
 print(happiness)
 
 wage_usd = format_currency(wage)
@@ -35,3 +34,18 @@ print(wage_usd)
 
 wage_and_happiness = wage.merge(happiness)
 print(wage_and_happiness)
+wage_and_happiness_by_country = wage_and_happiness.groupby("Country")
+print(wage_and_happiness_by_country)
+wage_average_per_country = wage_and_happiness_by_country["Value"].mean()
+happiness_average_per_country = wage_and_happiness_by_country[
+  "Happiness score"].mean()
+
+# calculations
+print("Countries with the highest average wages:",
+      wage_average_per_country.nlargest(10))
+print("Countries with the highest average happiness:",
+      happiness_average_per_country.nlargest(10))
+print("Countries with the lowest average wages:",
+      wage_average_per_country.nsmallest(10))
+print("Countries with the lowest average happiness:",
+      happiness_average_per_country.nsmallest(10))
