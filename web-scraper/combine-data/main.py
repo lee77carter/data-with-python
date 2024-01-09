@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import json
 
 
 def get_soup(url):
@@ -33,10 +34,19 @@ def get_animal(url):
 
 category_data = get_categories("https://en.wikipedia.org/wiki/Endangered_species")
 
+collected_data = []
+
 for category in category_data:
   for animal in category_data[category]:
     animal_href = animal["href"]
-
+    animal_name = animal.contents[0]
     animal_class = get_animal("https://en.wikipedia.org" + animal_href)
-    print(animal_class)
-    print()
+    if len(animal_name) > 3:
+      collected_data.append({
+        "Category":category, 
+        "Animal Name":animal_name, 
+        "Animal Class":animal_class
+      })
+      
+with open("data.json", "w") as jsonfile:
+  json.dump(collected_data, jsonfile)
